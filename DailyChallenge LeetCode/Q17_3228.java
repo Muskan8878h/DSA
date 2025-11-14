@@ -1,4 +1,4 @@
-class Solution {
+class Q17_3228 {
     public int maxOperations(String s) {
         int n=s.length()-1;
         int zeroes=0;
