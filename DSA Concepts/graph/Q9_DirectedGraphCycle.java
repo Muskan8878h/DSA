@@ -34,3 +34,44 @@ class Solution {
         return false;
     }
 }
+
+
+// bfs (Kahn's Algorithm)
+
+class Solution {
+    public boolean isCyclic(int V, int[][] edges) {
+        // code here
+        List<List<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int[] e: edges){
+            adj.get(e[0]).add(e[1]);
+        }
+        
+        int[] indegree=new int[V];
+        for(int i=0;i<V;i++){
+            for(int node: adj.get(i)){
+                indegree[node]++;
+            }
+        }
+        
+        Queue<Integer> q=new LinkedList<>();
+        for(int i=0;i<V;i++){
+            if(indegree[i]==0) q.add(i);
+        }
+        
+        int count=0;
+        while(!q.isEmpty()){
+            int n=q.poll();
+            count++;
+            for(int nei:adj.get(n)){
+                indegree[nei]--;
+                if(indegree[nei]==0){
+                    q.add(nei);
+                }
+            }
+        }
+        return count!=V;
+    }
+}
